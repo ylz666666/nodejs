@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>发送数据到服务器</button>
+    <script>
+        //客户端(浏览器) websocket 
+        //创建一个websocket，同时发送连接到服务器
+        const ws = new WebSocket('ws://localhost:5008')//ws/wss协议相当于http/https
+        ws.onmessage = function(e){//收到服务器消息
+            console.log('来自服务器的数据：',e.data);
+        }
+        ws.onopen = function(){//握手完成触发事件
+            console.log('连接已建立');
+        }
+        ws.onclose = function(){
+            console.log("通道关闭");
+        }
+        //ws.close();//客户端主动断开连接
+        document.querySelector('button').onclick = function(){
+            ws.send('123');//使用ws协议发送数据
+        }
+    </script>
+</body>
+</html>

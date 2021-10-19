@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>
+        <input type="text" name="a">
+    </p>
+    <p>
+        <input type="file" name="img" multiple="multiple">
+        <!-- multiple可以添加多个文件 -->
+    </p>
+    <p><button>提交</button></p>
+    <p><img src="./upload/37e85272c43ec897091386874d3262db" alt=""></p>
+    <p><img id="img" src="" alt=""></p>
+</body>
+<script>
+
+    function upload() {
+        const img = document.getElementById("img");
+        const inpA = document.querySelector('[name=a]');
+        const inpFile = document.querySelector('[name=img]');
+        const formData = new FormData();//构建form-data格式
+        formData.append('a', inpA.value);
+        for (const file of inpFile.files) {
+            formData.append('img', file, file.name);//files获取文件信息  inpFile.files获取文件信息伪数组
+        }
+        fetch('/api/upload', {//feth要then2次
+            body: formData,
+            method: "POST",
+        }).then(resp => {
+            return resp.json();
+        }).then(resp => {
+            console.log(resp);
+            if (resp.code) {
+                //有错误
+                alert(resp.msg);
+            } else {
+                img.src = resp.data;
+            }
+
+        })
+
+    }
+    document.querySelector('button').onclick = upload;
+</script>
+
+</html>

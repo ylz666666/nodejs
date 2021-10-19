@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <a href="/res/hill.jpg">下载</a> -->
+
+
+    <!-- 迅雷下载协议 
+        把完整的下载地址得到
+        AA地址ZZ
+        base64编码
+        thunder://base64编码
+    -->
+    <a resrole='thunder' href="/res/hill.jpg">下载</a>
+<script>
+    const a = document.querySelector("a[resrole=thunder]");
+    console.log(a);
+    let thunderLink = `AA${a.href}ZZ`; //把完整的下载地址得到AA地址ZZ  AA/res/hill.jpgZZ
+    thunderLink = bota(thunderLink);//bota 把字符串变成64编码 浏览器的方法
+    thunderLink = "thunder://" +thunderLink ;//前面再拼接这个thunder://
+    a.href = thunderLink ;//最后天上地址
+</script>
+</body>
+
+</html>

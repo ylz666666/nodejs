@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>发送请求到服务器</button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <script>
+      const socket = io.connect();//不给地址默认使用当前地址
+      document.querySelector('button').onclick = function(){
+          socket.emit('msg','msg消息体');//和服务器那边对应的 发消息用emit 
+      }
+      socket.on('test',chunk =>{
+          console.log(chunk.toString('utf-8'));
+      });//接收消息 监听服务器test那边发送来的消息
+      socket.on('disconnect',() =>{//断开连接的时候触发
+        console.log('断开连接');
+    });
+    </script>
+</body>
+</html>

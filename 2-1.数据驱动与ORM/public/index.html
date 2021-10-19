@@ -1,0 +1,66 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>账号: <input type="text" id="loginId"></p>
+    <p>密码: <input type="password" id="loginPwd"></p>
+    <p id="captchaArea" style="display:none">
+        验证码: <input type="text" id="captcha">
+        <img id="imgCaptcha" src="/captcha" alt="">
+    </p>
+    <p><button>登录</button></p>
+</body>
+<script>
+function refreshCaptcha(){//给img重新赋值一个地址 刷新验证码 路径后面加参数避免浏览器缓存机制不刷新
+    imgCaptcha.src = `/captcha?rad=${Math.random()}`;
+}
+imgCaptcha.onclick = refreshCaptcha;
+document.querySelector('button').onclick =async function(){
+    const body = {//请求体内容
+        loginId:loginId.value,
+        loginPwd:loginPwd.value,
+    }
+    if(captchaArea.style.display!=='none'){//如果验证图片出现
+        body.captcha = captcha.value ; //给请求体中添加输入的验证码
+    }
+    
+   const resp = await fetch('/api/admin/login',{
+       method:'POST',
+       headers:{
+           "content-type":"application/json",
+       },
+       body:JSON.stringify(body),//把请求体变成字符串
+   }).then(resp =>{
+       return resp.json();
+   })
+   if(resp.code===401){//判定为机器人 显示验证码
+    captchaArea.style.display='block';
+    console.log('验证码错误');
+    refreshCaptcha();//刷新验证码
+   }else if(resp.data){
+       console.log('登录成功');
+   }else{
+       console.log('登录失败')
+   }
+}
+</script>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./1.css">
+</head>
+<body>
+    <h1>Hello</h1>
+    <script src="./1.js"></script>
+</body>
+</html>
